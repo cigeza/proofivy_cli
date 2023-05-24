@@ -26,7 +26,7 @@ def encode(data: bytes) -> str:
     return PREFIX + b32.lower().replace("=", "")
 
 
-def cid_sha256_wrap_digest(digest: bytes) -> str:
+def cid_wrap_digest(digest: bytes) -> str:
     digest_len = len(digest).to_bytes(1, "big")
     if digest_len != MULTICODEC_LENGTH_256:
         raise AttributeError("Invalid digest length")
@@ -40,7 +40,7 @@ def main():
     with open(args.filename, mode='rb') as file:
         file_to_hash = file.read()
     blake3_file = blake3(file_to_hash).digest()
-    hash_string = cid_sha256_wrap_digest(blake3_file)
+    hash_string = cid_wrap_digest(blake3_file)
     print(f"{hash_string}")
 
 
